@@ -1,28 +1,88 @@
 const GameBoard = (() => {
-const gameArr = [["","",""],
-                 ["","",""],
-                 ["","",""]];
-const displayController = {
-    playerOneScore: 0,
-    playerTwoScore: 0,
+    const gameBoardEl = document.querySelector(".game-board");
+    const gameArr = [['X','','O'],
+                     ["","O",""],
+                     ["","","X"]];
+    const displayController ={
+        playerTurn : true,
 };
 
 return {
     gameArr,
     displayController,
+    gameBoardEl,
   };
 })();
 
 const playerMaker = () => {
     const playerOne = {
         score: 0,
-        sign: "X",
+        sign: 'X',
     }
     const playerTwo = {
         score: 0,
-        sign: "O",
+        sign: 'O',
     }
+};
+
+const createGameGrid = () => {
+    GameBoard.gameArr.forEach((arr) => {
+        arr.forEach((element) => {
+            let square = makeGameSquare();
+            square.innerText = `${element}`;
+            GameBoard.gameBoardEl.appendChild(square);
+            showGameGrid();
+
+        })
+    })
+};
+
+const makeGameSquare = () => {
+    let gameBoardSquare = document.createElement('div')
+        gameBoardSquare.className = 'game-square';
+    return gameBoardSquare;
 }
 
+const showGameGrid = () => {
+    GameBoard.gameBoardEl.style.visibility = 'visible';
+}
+const hideGameGrid = () => {
+    GameBoard.gameBoardEl.style.visibility = 'invisible';
+}
 
-console.log(GameBoard.displayController)
+const changeGameTitle = () => {
+    let playTitle = document.querySelector('.title-play')
+    playTitle.innerText = `${GameBoard.gameArr[1][0]}`
+}
+
+const hideMenuButtons = () => {
+    const gameButtons = document.querySelector('.game-buttons')
+    gameButtons.style.visibility = 'hidden';
+    
+}
+
+const createGameButtonFunc = () => {
+    let vsPlayerButton = document.querySelector('.play-button1')
+    vsPlayerButton.addEventListener('click', () => {
+        changeGameTitle();
+        createGameGrid();
+        hideMenuButtons();
+        resetGameGrid();
+
+       
+    })
+}
+createGameButtonFunc();
+const createNewGame = () => {
+
+}
+
+const resetGameGrid = () => {
+    GameBoard.gameArr.forEach((arr) => {
+        arr.forEach((element) => {
+            console.log(element)
+            element = "MATAN";
+        });
+    }
+)};
+
