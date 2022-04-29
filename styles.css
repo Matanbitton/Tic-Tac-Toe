@@ -21,7 +21,7 @@
     background-color: rgb(53, 53, 102);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: auto;
 }
 .game-square {
     
@@ -51,7 +51,7 @@ title {
 .title-play {
     color: rgb(153, 153, 226);
 }
-.play-button {
+.play-button1, .play-button2 {
     background-color: rgb(53, 53, 102);;
     color: rgb(226, 240, 253);
     font-size: 30px;
@@ -65,4 +65,13 @@ title {
     justify-content: center;
     gap: 15px;
 
+}
+
+.game-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    padding: 0;
+    color: rgb(226, 240, 253);;
 }
