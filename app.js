@@ -27,11 +27,11 @@ const playerMaker = () => {
 
 const createGameGrid = () => {
     GameBoard.gameArr.forEach((arr) => {
-        arr.forEach((element) => {
-            let square = makeGameSquare();
-            square.innerText = `${element}`;
-            GameBoard.gameBoardEl.appendChild(square);
-            showGameGrid();
+            arr.forEach((element) => {
+                let square = makeGameSquare();
+                square.innerText = `${element}`;
+                GameBoard.gameBoardEl.appendChild(square);
+                showGameGrid();
 
         })
     })
@@ -78,10 +78,15 @@ const createNewGame = () => {
 }
 
 const resetGameGrid = () => {
+    const currGrid = document.querySelectorAll('.game-square');
+    currGrid.forEach((el)=>{
+        el.innerText = '';
+    })
     GameBoard.gameArr.forEach((arr) => {
         arr.forEach((element) => {
-            console.log(element)
-            element = "MATAN";
+            element = '';
+            
+
         });
     }
 )};
