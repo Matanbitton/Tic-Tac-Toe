@@ -1,18 +1,20 @@
-const playerMaker = () => {
-  const playerOne = {
-    score: 0,
-    sign: "X",
-  };
-  const playerTwo = {
-    score: 0,
-    sign: "O",
-  };
-  return { playerOne, playerTwo };
-};
-
 const GameBoard = (() => {
   const gameBoardEl = document.querySelector(".game-board");
   const gameArr = ["", "", "", "", "", "", "", "", ""];
+  const playerMaker = () => {
+    const playerOne = {
+      score: 0,
+      sign: "X",
+    };
+    const playerTwo = {
+      score: 0,
+      sign: "O",
+    };
+    return { playerOne, playerTwo };
+  };
+  const playerOne = playerMaker().playerOne;
+  const playerTwo = playerMaker().playerTwo;
+
   let playerTurn = playerMaker().playerOne["sign"];
 
   const turnTracker = () => {
@@ -31,13 +33,17 @@ const GameBoard = (() => {
       showGameGrid();
     }
   };
+
   const gameEnd = false;
 
   return {
+    playerOne,
+    playerTwo,
     playerTurn,
     gameArr,
     gameBoardEl,
     gameEnd,
+    playerMaker,
     turnTracker,
     createGameGrid,
   };
@@ -57,8 +63,6 @@ const makeGameSquare = () => {
         checkWinner();
       }
     }
-
-    console.log(GameBoard.gameArr);
   });
 
   return gameBoardSquare;
@@ -66,7 +70,7 @@ const makeGameSquare = () => {
 const updateGameText = () => {
   let playText = document.querySelector(".title-play");
   if (!GameBoard.gameEnd) {
-    playText.innerText = `its ${GameBoard.playerTurn} Turn To Play`;
+    playText.innerText = `its ${GameBoard.playerTurn}'s Turn To Play`;
   } else {
     playText.innerText = `The Winner is: ${GameBoard.playerTurn}`;
   }
@@ -76,17 +80,22 @@ const updateGameArr = (square) => {
   GameBoard.gameArr[placeInArr] = square.innerText;
 };
 const updatePlayerScore = () => {
-  let players = playerMaker();
-  let playerOneSign = players.playerOne.sign;
-  let playerTwoSign = players.playerTwo.sign;
+  let playerOneSign = GameBoard.playerOne.sign;
+  let playerTwoSign = GameBoard.playerTwo.sign;
   if (playerOneSign === GameBoard.playerTurn) {
-    players.playerOne.score++;
-    showPlayerScore(players);
+    GameBoard.playerOne.score++;
+    showPlayerScore(GameBoard.playerOne, GameBoard.playerTwo);
   }
   if (playerTwoSign === GameBoard.playerTurn) {
-    players.playerTwo.score++;
-    showPlayerScore(players);
+    GameBoard.playerTwo.score++;
+    showPlayerScore(GameBoard.playerOne, GameBoard.playerTwo);
   }
+};
+const startGame = () => {
+  changeGameTitle();
+  GameBoard.createGameGrid();
+  hideMenuButtons();
+  resetGameGrid();
 };
 
 const finishGame = () => {
@@ -167,10 +176,7 @@ const hideMenuButtons = () => {
 const createGameButtonFunc = () => {
   let vsPlayerButton = document.querySelector(".play-button1");
   vsPlayerButton.addEventListener("click", () => {
-    changeGameTitle();
-    GameBoard.createGameGrid();
-    hideMenuButtons();
-    resetGameGrid();
+    startGame();
   });
 };
 createGameButtonFunc();
@@ -181,16 +187,16 @@ const resetGameGrid = () => {
   currGrid.forEach((el) => {
     el.innerText = "";
   });
-  GameBoard.gameArr.forEach((element) => {
-    element.innerText = "";
-  });
+  for (let i = 0; i < GameBoard.gameArr.length; i++) {
+    GameBoard.gameArr[i] = "";
+  }
 };
 
-const showPlayerScore = (players) => {
+const showPlayerScore = (playerOne, playerTwo) => {
   let playerOneScore = document.querySelector(".player-one-score");
   let plaerTwoScore = document.querySelector(".player-two-score");
-  playerOneScore.innerText = `Player X Score: ${players.playerOne.score}`;
-  plaerTwoScore.innerText = `Player O Score: ${players.playerTwo.score}`;
+  playerOneScore.innerText = `Player X Score: ${playerOne.score}`;
+  plaerTwoScore.innerText = `Player O Score: ${playerTwo.score}`;
 };
 
 //
