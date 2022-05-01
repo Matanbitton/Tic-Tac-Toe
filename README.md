@@ -28,7 +28,6 @@ I intend to implement a min max algorithm so that the player plays against an im
 
 - The importance of NOT pullting the global namespace.
 
--
 
 ## What I struggled with:
 
