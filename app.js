@@ -114,48 +114,60 @@ const finishGame = () => {
 const checkWinner = () => {
   const board = GameBoard.gameArr;
   const currPlayer = GameBoard.playerTurn;
-  console.log(GameBoard.playerTurn);
-  if (
-    //checking rows
-    (board[0] === currPlayer &&
-      board[1] === currPlayer &&
-      board[2] === currPlayer) ||
-    (board[3] === currPlayer &&
-      board[4] === currPlayer &&
-      board[5] === currPlayer) ||
-    (board[6] === currPlayer &&
-      board[7] === currPlayer &&
-      board[8] === currPlayer)
-  ) {
-    finishGame();
-  }
-  if (
-    //checking columns
-    (board[0] === currPlayer &&
-      board[3] === currPlayer &&
-      board[6] === currPlayer) ||
-    (board[1] === currPlayer &&
-      board[4] === currPlayer &&
-      board[7] === currPlayer) ||
-    (board[2] === currPlayer &&
-      board[5] === currPlayer &&
-      board[8] === currPlayer)
-  ) {
-    finishGame();
-  }
-  if (
-    //Checking Diagonal
-    (board[0] === currPlayer &&
-      board[4] === currPlayer &&
-      board[8] === currPlayer) ||
-    (board[2] === currPlayer &&
-      board[4] === currPlayer &&
-      board[6] === currPlayer)
-  ) {
-    finishGame();
+  let tie = checkTie();
+  if (!tie) {
+    if (
+      //checking rows
+      (board[0] === currPlayer &&
+        board[1] === currPlayer &&
+        board[2] === currPlayer) ||
+      (board[3] === currPlayer &&
+        board[4] === currPlayer &&
+        board[5] === currPlayer) ||
+      (board[6] === currPlayer &&
+        board[7] === currPlayer &&
+        board[8] === currPlayer)
+    ) {
+      finishGame();
+    }
+    if (
+      //checking columns
+      (board[0] === currPlayer &&
+        board[3] === currPlayer &&
+        board[6] === currPlayer) ||
+      (board[1] === currPlayer &&
+        board[4] === currPlayer &&
+        board[7] === currPlayer) ||
+      (board[2] === currPlayer &&
+        board[5] === currPlayer &&
+        board[8] === currPlayer)
+    ) {
+      finishGame();
+    }
+    if (
+      //Checking Diagonal
+      (board[0] === currPlayer &&
+        board[4] === currPlayer &&
+        board[8] === currPlayer) ||
+      (board[2] === currPlayer &&
+        board[4] === currPlayer &&
+        board[6] === currPlayer)
+    ) {
+      finishGame();
+    }
+  } else {
+    let playText = document.querySelector(".title-play");
+    playText.innerText = "Its a Tie!";
   }
 };
-
+const checkTie = () => {
+  for (let i = 0; i < GameBoard.gameArr.length; i++) {
+    if (GameBoard.gameArr[i] == "") {
+      return false;
+    }
+  }
+  return true;
+};
 const showGameGrid = () => {
   GameBoard.gameBoardEl.style.visibility = "visible";
 };
