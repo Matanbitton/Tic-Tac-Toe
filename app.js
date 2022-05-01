@@ -31,11 +31,13 @@ const GameBoard = (() => {
       showGameGrid();
     }
   };
+  const gameEnd = false;
 
   return {
     playerTurn,
     gameArr,
     gameBoardEl,
+    gameEnd,
     turnTracker,
     createGameGrid,
   };
@@ -46,11 +48,14 @@ const makeGameSquare = () => {
   gameBoardSquare.className = "game-square";
 
   gameBoardSquare.addEventListener("click", () => {
-    if (gameBoardSquare.innerText == "") {
-      GameBoard.playerTurn = GameBoard.turnTracker();
-      gameBoardSquare.innerText = `${GameBoard.playerTurn}`;
-      updateGameArr(gameBoardSquare);
-      checkWinner();
+    if (!GameBoard.gameEnd) {
+      if (gameBoardSquare.innerText == "") {
+        updateGameText();
+        GameBoard.playerTurn = GameBoard.turnTracker();
+        gameBoardSquare.innerText = `${GameBoard.playerTurn}`;
+        updateGameArr(gameBoardSquare);
+        checkWinner();
+      }
     }
 
     console.log(GameBoard.gameArr);
@@ -58,10 +63,43 @@ const makeGameSquare = () => {
 
   return gameBoardSquare;
 };
-
+const updateGameText = () => {
+  let playText = document.querySelector(".title-play");
+  if (!GameBoard.gameEnd) {
+    playText.innerText = `its ${GameBoard.playerTurn} Turn To Play`;
+  } else {
+    playText.innerText = `The Winner is: ${GameBoard.playerTurn}`;
+  }
+};
 const updateGameArr = (square) => {
   const placeInArr = square.getAttribute("id");
   GameBoard.gameArr[placeInArr] = square.innerText;
+};
+const updatePlayerScore = () => {
+  let players = playerMaker();
+  let playerOneSign = players.playerOne.sign;
+  let playerTwoSign = players.playerTwo.sign;
+  if (playerOneSign === GameBoard.playerTurn) {
+    players.playerOne.score++;
+    showPlayerScore(players);
+  }
+  if (playerTwoSign === GameBoard.playerTurn) {
+    players.playerTwo.score++;
+    showPlayerScore(players);
+  }
+};
+
+const finishGame = () => {
+  updatePlayerScore();
+  GameBoard.gameEnd = true;
+  updateGameText();
+  const resetGameButton = document.querySelector(".reset-game");
+  resetGameButton.style.display = "block";
+
+  resetGameButton.addEventListener("click", () => {
+    resetGameGrid();
+    GameBoard.gameEnd = false;
+  });
 };
 
 const checkWinner = () => {
@@ -80,7 +118,7 @@ const checkWinner = () => {
       board[7] === currPlayer &&
       board[8] === currPlayer)
   ) {
-    console.log("Winner");
+    finishGame();
   }
   if (
     //checking columns
@@ -94,10 +132,10 @@ const checkWinner = () => {
       board[5] === currPlayer &&
       board[8] === currPlayer)
   ) {
-    console.log("Winner");
+    finishGame();
   }
   if (
-    //Check Diagonal
+    //Checking Diagonal
     (board[0] === currPlayer &&
       board[4] === currPlayer &&
       board[8] === currPlayer) ||
@@ -105,13 +143,14 @@ const checkWinner = () => {
       board[4] === currPlayer &&
       board[6] === currPlayer)
   ) {
-    console.log("Winner");
+    finishGame();
   }
 };
 
 const showGameGrid = () => {
   GameBoard.gameBoardEl.style.visibility = "visible";
 };
+
 const hideGameGrid = () => {
   GameBoard.gameBoardEl.style.visibility = "invisible";
 };
@@ -145,6 +184,13 @@ const resetGameGrid = () => {
   GameBoard.gameArr.forEach((element) => {
     element.innerText = "";
   });
+};
+
+const showPlayerScore = (players) => {
+  let playerOneScore = document.querySelector(".player-one-score");
+  let plaerTwoScore = document.querySelector(".player-two-score");
+  playerOneScore.innerText = `Player X Score: ${players.playerOne.score}`;
+  plaerTwoScore.innerText = `Player O Score: ${players.playerTwo.score}`;
 };
 
 //
