@@ -78,3 +78,22 @@ title {
   padding: 0;
   color: rgb(226, 240, 253);
 }
+
+.players-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(153, 153, 226);
+  font-size: 25px;
+  gap: 30px;
+  padding: 20px;
+}
+.reset-game {
+  display: none;
+  background-color: rgb(53, 53, 102);
+  color: rgb(226, 240, 253);
+  font-size: 30px;
+  border-radius: 1em;
+  padding: 3px 10px 3px 10px;
+  width: 50%;
+}
