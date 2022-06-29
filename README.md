@@ -1,6 +1,6 @@
 # Tic-Tac-Toe
 
-- 👨‍💻 See the live version of this project at **[Tic-Tac-Toe](https://matanbitton.github.io/Tic-Tac-Toe/)**
+- 👨‍💻 See the live version of this project at **[Tic-Tac-Toe](https://matanbitton.github.io/Tic-Tac-Toe/)** Not Optimized For Mobile.
 
 ## About The Project
 
